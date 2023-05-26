@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html style="background-color: #eaecec">
+  <head>
+    <meta charset="UTF-8" />
+    <title>asia-oee</title>
+    <link rel="icon" href="<%= BASE_URL %>images/favicon.ico" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script>
+      const env = {
+        'tky-dev-customapp.cloudmg.fiot.globaldenso.com': 'G-5QJT0LVP6P',
+        'tky-stg-customapp.cloudmg.fiot.globaldenso.com': 'G-J06QV1C3NR',
+        'customapp.cloudmg.fiot.globaldenso.com': 'G-6Y95BQE9R6',
+      };
+
+      const getCookie = (key) => {
+        let matches = document.cookie.match(
+          new RegExp(
+            '(?:^|; )' +
+              key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
+              '=([^;]*)'
+          )
+        );
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+      };
+
+      if (location.hostname in env) {
+        const measurementId = env[location.hostname];
+        const cdnElement = document.createElement('script');
+        const url = 'https://www.googletagmanager.com/gtag/js?id=';
+        cdnElement.src = url + measurementId;
+        document.getElementsByTagName('head')[0].appendChild(cdnElement);
+
+        const affiliation1Level = getCookie(
+          'customapp-js-affiliation-1level-eng'
+        );
+        const affiliation2Level = getCookie(
+          'customapp-js-affiliation-2level-eng'
+        );
+
+        const gtagElement = document.createElement('script');
+        gtagElement.innerHTML =
+          'window.dataLayer = window.dataLayer || [];' +
+          'function gtag() {dataLayer.push(arguments);}' +
+          "gtag('js', new Date());" +
+          "gtag('config', '" +
+          measurementId +
+          "', {'page_title': 'asia-oee'});" +
+          "gtag('set', 'user_properties', {" +
+          'affiliation_1level: ' +
+          affiliation1Level +
+          ', affiliation_2level: ' +
+          affiliation2Level +
+          '});';
+        document.getElementsByTagName('head')[0].appendChild(gtagElement);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
